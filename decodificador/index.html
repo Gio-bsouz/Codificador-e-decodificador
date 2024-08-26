@@ -1,0 +1,190 @@
+<!DOCTYPE html> <!--declara que o documento é HTML -->
+<html lang="pt-BR"> <!--inicia o documento HTML e define o idioma da página como português do Brasil -->
+<head> <!--contém metadados sobre o documento -->
+    <meta charset="UTF-8"> <!-- define a codificação de caracteres como UTF-8, o que permite usar caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ajusta a visualização em dispositivos movéis -->
+    <title>Codificador e Decodificador de Texto</title> <!-- define o titulo da página, exibido na aba do navegador -->
+    <style> /*Define o CSS diretamente no documento HTML. */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F0F4FB;
+            display: flex;
+            flex-direction: row;
+            align-items: space-between;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0 20px;
+        } /*Define o estilo do corpo da página: fonte Arial, fundo azul claro, e layout centralizado vertical e horizontalmente.*/
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+        } /*Estiliza o contêiner principal com fundo branco, bordas arredondadas, e sombra. Limita a largura a 600px.*/
+
+        h1 {
+            color: #4A4A4A;
+        } /*Define a cor do título principal como cinza escuro.*/
+
+        .input-area {
+            width: 100%;
+            margin-bottom: 20px;
+            background: url('Documentos/input-campo para texto.PNG para texto.PNG') no-repeat center;
+            background-size: contain;
+            position: relative;
+            height: 150px;
+        } /*Define a área de entrada de texto com um fundo de imagem e tamanho fixo.*/
+
+        .input-area textarea {
+            width: 90%;
+            height: 60%;
+            padding: 25px;
+            font-size: 16px;
+            border: 1px solid rgb(148, 149, 152);
+            background: transparent;
+            resize: none;
+            outline: none;
+            color: #4A4A4A;
+        } /*Define o estilo da caixa de texto, com texto cinza escuro e sem bordas.*/
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 0px;
+        } /*Cria uma seção com botões espaçados uniformemente.*/
+
+        button {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+        } /*Estiliza os botões, definindo o tamanho e a cor.*/
+
+        .encrypt-btn {
+            background-color: #395270;
+            color: #FFFFFF;
+        } /*Estiliza o botão de criptografar com fundo azul e texto branco.*/
+
+        .decrypt-btn {
+            background-color: #395270;
+            color: #FFFFFF;
+        } /*Estiliza o botão de descriptografar com fundo cinza claro e texto azul.*/
+
+        .result-container {
+            width: 100%;
+            background: url('area para mostrar o texto.PNG') no-repeat center;
+            background-size: contain;
+            position: relative;
+            height: 300px;
+            padding: 20px;
+        } /*Define a área de exibição do resultado com uma imagem de fundo.*/
+
+        .result-container textarea {
+            width: 100%;
+            height: 100%;
+            border: 1px solid grey;
+            background: ; /*cor de fundo*/
+            resize: none;
+            outline: none;
+            color: #403f3f;
+            font-size: 16px;
+            overflow: auto;
+            
+        } /*Define o estilo da área de texto resultante, sem bordas e com rolagem automática.*/
+
+        .copy-btn {
+            background: url('Documentos/botao copiar.PNG') no-repeat center;
+            background-size: contain;
+            width: 25%;
+            height: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid rgb(61, 132, 237); /* Borda azul fina de 1px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        } /*Estiliza o botão de copiar com uma imagem de fundo e centraliza o conteúdo.*/
+
+        .info {
+            font-size: 12px;
+            color: #4A4A4A;
+            margin-bottom: 20px;
+        } /*Define o estilo do texto de informação, com fonte menor e cor cinza.*/
+    </style>
+</head> <!--</style></head>: Fecha a seção de estilos e o cabeçalho -->
+<body> <!--Inicia o corpo do documento -->
+    <div class="container"> <!--Cria o contêiner principal -->
+        <h1>CODIFICADOR E DECODIFICADOR</h1> <!--Exibe o título "Digite seu texto"-->
+        
+        <div class="input-area"> <!--Área de entrada de texto -->
+            <textarea id="inputText" placeholder="Digite o texto aqui..."></textarea> <!-- <textarea id="inputText">: Caixa de texto onde o usuário digita -->
+        </div>
+
+        <div class="info">*apenas letras minúsculas e sem acento*</div> <!--Exibe a informação sobre o texto permitido -->
+
+        <div class="options"> <!--Contém os botões de codificar e decodificar -->
+            <button class="encrypt-btn" onclick="encodeText()">Criptografar</button>
+            <button class="decrypt-btn" onclick="decodeText()">Descriptografar</button> <!--<button>: Define os botões que chamam as funções JavaScript para codificar e decodificar -->
+        </div>
+
+        <div class="result-container"> <!--Área onde o resultado é exibido -->
+            <textarea id="outputText" readonly></textarea> <!--<textarea id="outputText">: Área de texto somente leitura onde o resultado aparece -->
+        </div>
+        
+        <button class="copy-btn" onclick="copyToClipboard()">Copiar</button> <!--Botão para copiar o texto resultante -->
+    </div>
+
+    <script>
+        function encodeText() {
+            let text = document.getElementById("inputText").value.toLowerCase();
+            let encodedText = text.replace(/e/g, "enter")
+                                  .replace(/i/g, "imes")
+                                  .replace(/a/g, "ai")
+                                  .replace(/o/g, "ober")
+                                  .replace(/u/g, "ufat");
+            document.getElementById("outputText").value = encodedText;
+        } /*'function encodeText()': Função que codifica o texto substituindo as vogais*/
+          /*'text.replace(...)': Substitui todas as ocorrências de cada vogal pelos respectivos códigos.*/
+        
+        function decodeText() /*Declaração da função decodeText, que será usada para decodificar o texto de acordo com substituições pré-definidas*/ 
+        { 
+            let text = document.getElementById("inputText").value.toLowerCase(); /*'let text = ...':Esta linha cria uma variável chamada text, que armazena o valor do elemento HTML com o ID inputText. Esse elemento é a área de texto onde o usuário insere o texto. O método toLowerCase() converte todo o texto para minúsculas para garantir que a substituição seja uniforme */
+            let decodedText = text.replace(/enter/g, "e")
+                                  .replace(/imes/g, "i")
+                                  .replace(/ai/g, "a")
+                                  .replace(/ober/g, "o")
+                                  .replace(/ufat/g, "u"); 
+                /*'let decodedText = ...': Cria uma variável decodedText que armazena o texto decodificado. O método replace() é chamado várias vezes para substituir padrões específicos por suas respectivas vogais originais: 
+            
+                '/enter/g' substitui todas as ocorrências de "enter" por "e".
+                '/imes/g' substitui todas as ocorrências de "imes" por "i".
+                '/ai/g' substitui todas as ocorrências de "ai" por "a".
+                '/ober/g' substitui todas as ocorrências de "ober" por "o".
+                '/ufat/g' substitui todas as ocorrências de "ufat" por "u".
+                
+                O 'g' no final de cada expressão regular significa "global", ou seja, a substituição ocorrerá em todas as ocorrências do padrão no texto, e não apenas na primeira.*/
+                        
+            document.getElementById("outputText").value = decodedText; /*Esta linha coloca o texto decodificado na área de texto com o ID outputText. Isso exibe o resultado da decodificação na interface para o usuário*/
+        } 
+
+        function copyToClipboard() /*Declaração da função copyToClipboard, que será usada para copiar o texto decodificado para a área de transferência. */
+        {
+            let outputText = document.getElementById("outputText"); /*Cria uma variável outputText, que armazena o elemento HTML com o ID outputText, ou seja, a área de texto onde o resultado foi exibido. */
+            outputText.select(); /*Este método seleciona o texto dentro do elemento outputText. Isso é necessário para que o texto possa ser copiado.*/
+            document.execCommand("copy"); /*Executa o comando "copy", que copia o texto selecionado para a área de transferência.*/
+            alert("Texto copiado para a área de transferência!"); /*Exibe uma mensagem de alerta para o usuário informando que o texto foi copiado com sucesso.*/
+        }
+    </script>
+</body>
+</html>
